@@ -40,14 +40,46 @@ class HomeScreen extends StatelessWidget {
           SizedBox(
               width: 250.0,
               height: 60.0,
-              child: Button(onPressed: () {}, text: "انشاء حساب مدرس")),
+              child: Button(
+                  onPressed: () {
+                    Navigator.pushNamed(context, "signupscreen");
+                  },
+                  text: "انشاء حساب مدرس")),
           const SizedBox(
             height: 16,
           ),
           SizedBox(
               width: 250.0,
               height: 60.0,
-              child: Button(onPressed: () {}, text: "انشاء حساب طالب")),
+              child: Button(
+                  onPressed: () {
+                    Navigator.pushNamed(context, "signupscreen");
+                  },
+                  text: "انشاء حساب طالب")),
+          SizedBox(
+            height: 16,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              InkWell(
+                onTap: () {
+                  Navigator.pushNamed(context, "loginscreen");
+                },
+                child: Text(
+                  "اضغط هنا",
+                  style: TextStyle(
+                      color: Colors.cyan,
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold),
+                ),
+              ),
+              Text(
+                " لديك حساب بالفعل؟ ",
+                style: TextStyle(fontSize: 20),
+              ),
+            ],
+          )
         ],
       ),
     );
