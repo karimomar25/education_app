@@ -1,3 +1,5 @@
+import 'package:education_app/screens/auth/login_screen.dart';
+import 'package:education_app/screens/auth/signup_screen.dart';
 import 'package:education_app/screens/home_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -12,7 +14,18 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+          primaryColor: Colors.cyan,
+          elevatedButtonTheme: ElevatedButtonThemeData(
+              style: ButtonStyle(
+                  backgroundColor: MaterialStatePropertyAll(Colors.cyan)))),
       home: HomeScreen(),
+      routes: {
+"loginscreen":(context)=> LoginScreen(),
+"signupscreen":(context)=> SignUpScreen(),
+
+      },
+
     );
   }
 }
