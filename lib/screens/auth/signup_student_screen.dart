@@ -2,17 +2,21 @@ import 'package:education_app/widgets/button.dart';
 import 'package:education_app/widgets/textfield.dart';
 import 'package:flutter/material.dart';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
+class SignUpStudentScreen extends StatefulWidget {
+  const SignUpStudentScreen({super.key});
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  State<SignUpStudentScreen> createState() => _SignUpStudentScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _SignUpStudentScreenState extends State<SignUpStudentScreen> {
   final GlobalKey<FormState> formKey = GlobalKey();
   AutovalidateMode autovalidateMode = AutovalidateMode.disabled;
-  dynamic phoneNumper, password;
+  String? firstName, lastName, email;
+  // ignore: prefer_typing_uninitialized_variables
+  var phoneNumper;
+  // ignore: prefer_typing_uninitialized_variables
+  var password;
   bool isLoading = false;
   @override
   Widget build(BuildContext context) {
@@ -37,39 +41,66 @@ class _LoginScreenState extends State<LoginScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const Text(
-                  "سهل في التعلم ، بسيط في التواصل مع الكثير من المدرسين المتميزين",
+                  "ابحث عن المدرس المناسب لك بسهولة كبيرة ، معنا لا تحمل هم التفوق ! ",
                   textDirection: TextDirection.rtl,
-                  style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
+                  style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
                 ),
                 const SizedBox(
                   height: 24,
                 ),
                 const Text(
-                  "تسجيل الدخول لحسابك",
+                  "تسجيل في التطبيق كطالب",
                   style: TextStyle(fontSize: 20),
                 ),
                 const SizedBox(
                   height: 16,
                 ),
-                CustomTextField(
-                    inputType: TextInputType.phone,
-                    onSaved: (value) {
-                      phoneNumper = value;
-                    },
-                    text: "رقم الهاتف"),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    CustomTextField(
+                      onSaved: (value) {
+                        lastName = value;
+                      },
+                      text: "الاسم الثاني",
+                      width: MediaQuery.of(context).size.width / 2.2,
+                    ),
+                    CustomTextField(
+                      onSaved: (value) {
+                        firstName = value;
+                      },
+                      text: "الاسم الاول",
+                      width: MediaQuery.of(context).size.width / 2.2,
+                    ),
+                  ],
+                ),
                 const SizedBox(
                   height: 16,
                 ),
                 CustomTextField(
-                    onSaved: (value) {
-                      password = value;
-                    },
-                    obscureText: true,
-                    text: "كلمة السر"),
+                  onSaved: (value) {
+                    phoneNumper = value;
+                  },
+                  inputType: TextInputType.phone,
+                  text: "رقم الهاتف",
+                  width: double.infinity,
+                ),
                 const SizedBox(
                   height: 16,
                 ),
-                Button(
+                CustomTextField(
+                  obscureText: true,
+                  onSaved: (value) {
+                    password = value;
+                  },
+                  text: "كلمة السر",
+                  width: double.infinity,
+                ),
+                const SizedBox(
+                  height: 16,
+                ),
+                Center(
+                    child: Button(
                   isLoading: isLoading,
                   onTap: () {
                     isLoading = true;
@@ -80,9 +111,9 @@ class _LoginScreenState extends State<LoginScreen> {
                       setState(() {});
                     }
                   },
-                  text: "تسجيل الدخول",
+                  text: "تسجيل",
                   height: 50,
-                ),
+                ))
               ],
             ),
           ),
