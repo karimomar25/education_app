@@ -4,29 +4,31 @@ class Button extends StatelessWidget {
   const Button({
     super.key,
     required this.text,
-    this.onPressed,
+    this.onTap,
+    this.width,
+    this.height,
   });
   final String text;
-  final void Function()? onPressed;
+  final void Function()? onTap;
+  final double? width;
+  final double? height;
   @override
   Widget build(BuildContext context) {
-    return ElevatedButton(
-      child: Text(
-        text,
-        style: TextStyle(color: Colors.white),
-      ),
-      style: ElevatedButton.styleFrom(
-        //  backgroundColor: Colors.cyan,
-        textStyle: const TextStyle(
-          color: Colors.white,
-          fontSize: 25,
-          fontStyle: FontStyle.italic,
+    return InkWell(
+      onTap: onTap,
+      child: Container(
+        width: width,
+        height: height,
+        alignment: Alignment.center,
+        decoration: BoxDecoration(
+            color: Colors.cyan, borderRadius: BorderRadius.circular(400)),
+        child: Text(
+          text,
+          style: TextStyle(
+              color: Colors.white, fontSize: 25, fontWeight: FontWeight.bold),
+          textAlign: TextAlign.center,
         ),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(400),
-        ),
       ),
-      onPressed: onPressed,
     );
   }
 }
