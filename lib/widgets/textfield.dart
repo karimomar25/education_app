@@ -6,17 +6,20 @@ class CustomTextField extends StatelessWidget {
       required this.text,
       this.width,
       this.onSaved,
-      this.onChanged});
+      this.onChanged,
+      this.inputType});
   final String text;
   final double? width;
   final Function(String?)? onSaved;
   final void Function(String)? onChanged;
+  final TextInputType? inputType;
   @override
   Widget build(BuildContext context) {
     return SizedBox(
       width: width,
-      height: 55,
+      height: 70,
       child: TextFormField(
+        keyboardType: inputType,
         onChanged: onChanged,
         onSaved: onSaved,
         validator: (value) {
@@ -27,6 +30,7 @@ class CustomTextField extends StatelessWidget {
         },
         decoration: InputDecoration(
             hintText: text,
+            hintTextDirection: TextDirection.rtl,
             border:
                 OutlineInputBorder(borderRadius: BorderRadius.circular(24))),
       ),
