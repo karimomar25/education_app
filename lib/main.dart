@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      locale: const Locale("en"),
+      locale: const Locale("ar"),
       localizationsDelegates: const [
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
@@ -28,8 +28,8 @@ class MyApp extends StatelessWidget {
           elevatedButtonTheme: const ElevatedButtonThemeData(
               style: ButtonStyle(
                   backgroundColor: MaterialStatePropertyAll(Colors.cyan)))),
-      home: Directionality(
-          textDirection: TextDirection.rtl, child: const HomeScreen()),
+      home: const Directionality(
+          textDirection: TextDirection.rtl, child: HomeScreen()),
       routes: {
         "loginscreen": (context) => const LoginScreen(),
         "signupteacher": (context) => const SignUpTeacherScreen(),
