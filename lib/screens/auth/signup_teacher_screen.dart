@@ -1,4 +1,3 @@
-import 'package:education_app/generated/l10n.dart';
 import 'package:education_app/widgets/button.dart';
 import 'package:education_app/widgets/textfield.dart';
 import 'package:flutter/material.dart';

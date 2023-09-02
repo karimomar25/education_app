@@ -1,4 +1,3 @@
-import 'package:education_app/generated/l10n.dart';
 import 'package:education_app/screens/auth/login_screen.dart';
 import 'package:education_app/screens/auth/signup_student_screen.dart';
 import 'package:education_app/screens/auth/signup_teacher_screen.dart';
@@ -23,7 +22,6 @@ class MyApp extends StatelessWidget {
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate
       ],
-      supportedLocales: S.delegate.supportedLocales,
       theme: ThemeData(
           fontFamily: "Poppins",
           primarySwatch: Colors.cyan,
