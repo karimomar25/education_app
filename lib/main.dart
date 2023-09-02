@@ -28,8 +28,8 @@ class MyApp extends StatelessWidget {
           elevatedButtonTheme: const ElevatedButtonThemeData(
               style: ButtonStyle(
                   backgroundColor: MaterialStatePropertyAll(Colors.cyan)))),
-      home: Directionality(
-          textDirection: TextDirection.rtl, child: const HomeScreen()),
+      home: const Directionality(
+          textDirection: TextDirection.rtl, child: HomeScreen()),
       routes: {
         "loginscreen": (context) => const LoginScreen(),
         "signupteacher": (context) => const SignUpTeacherScreen(),
