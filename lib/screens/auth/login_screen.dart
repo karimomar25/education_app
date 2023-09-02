@@ -52,6 +52,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   height: 16,
                 ),
                 CustomTextField(
+                    inputType: TextInputType.phone,
                     onSaved: (value) {
                       phoneNumper = value;
                     },
