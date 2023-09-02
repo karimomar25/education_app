@@ -16,8 +16,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      locale: Locale("en"),
-      localizationsDelegates: [
+      locale: const Locale("en"),
+      localizationsDelegates: const [
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate
@@ -25,14 +25,15 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
           fontFamily: "Poppins",
           primarySwatch: Colors.cyan,
-          elevatedButtonTheme: ElevatedButtonThemeData(
+          elevatedButtonTheme: const ElevatedButtonThemeData(
               style: ButtonStyle(
                   backgroundColor: MaterialStatePropertyAll(Colors.cyan)))),
-      home: HomeScreen(),
+      home: Directionality(
+          textDirection: TextDirection.rtl, child: const HomeScreen()),
       routes: {
-        "loginscreen": (context) => LoginScreen(),
-        "signupteacher": (context) => SignUpTeacherScreen(),
-        "signupstudent": (context) => SignUpStudentScreen(),
+        "loginscreen": (context) => const LoginScreen(),
+        "signupteacher": (context) => const SignUpTeacherScreen(),
+        "signupstudent": (context) => const SignUpStudentScreen(),
       },
     );
   }
