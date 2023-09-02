@@ -37,7 +37,7 @@ class _LoginScreenState extends State<LoginScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const Text(
-                  "سهل في التعلم ، بسيط في التواصل ، مع الكثير من المدرسين المتميزين",
+                  "سهل في التعلم ، بسيط في التواصل مع الكثير من المدرسين المتميزين",
                   textDirection: TextDirection.rtl,
                   style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
                 ),

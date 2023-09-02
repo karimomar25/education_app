@@ -8,7 +8,7 @@ class CustomTextField extends StatelessWidget {
     this.onSaved,
     this.onChanged,
     this.inputType,
-    this.obscureText=false,
+    this.obscureText = false,
   });
   final String text;
   final double? width;
