@@ -13,10 +13,15 @@ class _SignUpTeacherScreenState extends State<SignUpTeacherScreen> {
   final GlobalKey<FormState> formKey = GlobalKey();
   AutovalidateMode autovalidateMode = AutovalidateMode.disabled;
   String? firstName, lastName, email;
+  // ignore: prefer_typing_uninitialized_variables
   var phoneNumper;
+  // ignore: prefer_typing_uninitialized_variables
+  var password;
+  bool isLoading = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
       ),
@@ -35,19 +40,19 @@ class _SignUpTeacherScreenState extends State<SignUpTeacherScreen> {
               textDirection: TextDirection.rtl,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
+                const Text(
                   "تواصل مع طلابك بكل سهولة ، سهل وبسيط وامن",
                   textDirection: TextDirection.rtl,
                   style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 24,
                 ),
-                Text(
+                const Text(
                   "تسجيل في التطبيق كمدرس",
                   style: TextStyle(fontSize: 20),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 16,
                 ),
                 Row(
@@ -69,7 +74,7 @@ class _SignUpTeacherScreenState extends State<SignUpTeacherScreen> {
                     ),
                   ],
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 16,
                 ),
                 CustomTextField(
@@ -80,7 +85,7 @@ class _SignUpTeacherScreenState extends State<SignUpTeacherScreen> {
                   text: "البريد الالكتروني",
                   width: double.infinity,
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 16,
                 ),
                 CustomTextField(
@@ -91,12 +96,25 @@ class _SignUpTeacherScreenState extends State<SignUpTeacherScreen> {
                   text: "رقم الهاتف",
                   width: double.infinity,
                 ),
-                SizedBox(
+                const SizedBox(
+                  height: 16,
+                ),
+                CustomTextField(
+                  obscureText: true,
+                  onSaved: (value) {
+                    password = value;
+                  },
+                  text: "كلمة السر",
+                  width: double.infinity,
+                ),
+                const SizedBox(
                   height: 16,
                 ),
                 Center(
                     child: Button(
+                  isLoading: isLoading,
                   onTap: () {
+                    isLoading = true;
                     if (formKey.currentState!.validate()) {
                       formKey.currentState!.save();
                     } else {

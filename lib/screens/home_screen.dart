@@ -64,7 +64,7 @@ class HomeScreen extends StatelessWidget {
                       Navigator.pushNamed(context, "signupstudent");
                     },
                     text: "انشاء حساب طالب")),
-            SizedBox(
+            const SizedBox(
               height: 100,
             ),
             Row(
@@ -74,7 +74,7 @@ class HomeScreen extends StatelessWidget {
                   onTap: () {
                     Navigator.pushNamed(context, "loginscreen");
                   },
-                  child: Text(
+                  child: const Text(
                     "اضغط هنا",
                     style: TextStyle(
                         color: Colors.cyan,
@@ -82,7 +82,7 @@ class HomeScreen extends StatelessWidget {
                         fontWeight: FontWeight.bold),
                   ),
                 ),
-                Text(
+                const Text(
                   " لديك حساب بالفعل؟ ",
                   style: TextStyle(fontSize: 20),
                 ),
