@@ -121,6 +121,7 @@ class _SignUpTeacherScreenState extends State<SignUpTeacherScreen> {
                       autovalidateMode = AutovalidateMode.always;
                       setState(() {});
                     }
+                    
                   },
                   text: "تسجيل",
                   height: 50,
