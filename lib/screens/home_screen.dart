@@ -12,7 +12,7 @@ class HomeScreen extends StatelessWidget {
       body: Container(
         decoration: BoxDecoration(
             gradient: LinearGradient(
-                colors: [Colors.white,  Colors.cyan.shade100],
+                colors: [Colors.white, Colors.cyan.shade100],
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter)),
         child: Column(
@@ -25,7 +25,7 @@ class HomeScreen extends StatelessWidget {
               height: 290,
             ),
             const SizedBox(
-              height: 60,
+              height: 45,
             ),
             AnimatedTextKit(
               animatedTexts: [
@@ -64,29 +64,28 @@ class HomeScreen extends StatelessWidget {
                       Navigator.pushNamed(context, "signupstudent");
                     },
                     text: "انشاء حساب طالب")),
-            const SizedBox(
-              height: 100,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                InkWell(
-                  onTap: () {
-                    Navigator.pushNamed(context, "loginscreen");
-                  },
-                  child: const Text(
-                    "اضغط هنا",
-                    style: TextStyle(
-                        color: Colors.cyan,
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold),
+            Expanded(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Text(
+                    " لديك حساب بالفعل؟ ",
+                    style: TextStyle(fontSize: 20),
                   ),
-                ),
-                const Text(
-                  " لديك حساب بالفعل؟ ",
-                  style: TextStyle(fontSize: 20),
-                ),
-              ],
+                  InkWell(
+                    onTap: () {
+                      Navigator.pushNamed(context, "loginscreen");
+                    },
+                    child: const Text(
+                      "اضغط هنا",
+                      style: TextStyle(
+                          color: Colors.cyan,
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                ],
+              ),
             )
           ],
         ),
