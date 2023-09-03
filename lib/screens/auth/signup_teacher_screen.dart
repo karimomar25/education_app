@@ -1,3 +1,4 @@
+import 'package:education_app/screens/auth/validation_screen.dart';
 import 'package:education_app/widgets/button.dart';
 import 'package:education_app/widgets/textfield.dart';
 import 'package:flutter/material.dart';
@@ -117,6 +118,10 @@ class _SignUpTeacherScreenState extends State<SignUpTeacherScreen> {
                     isLoading = true;
                     if (formKey.currentState!.validate()) {
                       formKey.currentState!.save();
+                          Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => ValidationScreen()),
+              );
                     } else {
                       autovalidateMode = AutovalidateMode.always;
                       setState(() {});
