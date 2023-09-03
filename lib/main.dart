@@ -30,7 +30,7 @@ class MyApp extends StatelessWidget {
               style: ButtonStyle(
                   backgroundColor: MaterialStatePropertyAll(Colors.cyan)))),
       home: const Directionality(
-          textDirection: TextDirection.rtl, child: ValidationScreen()),
+          textDirection: TextDirection.rtl, child: HomeScreen()),
       routes: {
         "loginscreen": (context) => const LoginScreen(),
         "signupteacher": (context) => const SignUpTeacherScreen(),

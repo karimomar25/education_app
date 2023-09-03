@@ -1,10 +1,9 @@
 import 'dart:async';
 
+import 'package:education_app/widgets/button.dart';
+import 'package:education_app/widgets/snackbar.dart';
 import 'package:flutter/material.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
-
-
-
 
 class ValidationScreen extends StatefulWidget {
   const ValidationScreen({
@@ -15,14 +14,13 @@ class ValidationScreen extends StatefulWidget {
   final String? phoneNumber;
 
   @override
-  State<ValidationScreen> createState() =>
-      _PinCodeVerificationScreenState();
+  State<ValidationScreen> createState() => _PinCodeVerificationScreenState();
 }
 
 class _PinCodeVerificationScreenState extends State<ValidationScreen> {
   TextEditingController textEditingController = TextEditingController();
   StreamController<ErrorAnimationType>? errorController;
-
+  bool isLoading = false;
   bool hasError = false;
   String currentText = "";
   final formKey = GlobalKey<FormState>();
@@ -40,21 +38,11 @@ class _PinCodeVerificationScreenState extends State<ValidationScreen> {
     super.dispose();
   }
 
-  // snackBar Widget
-  snackBar(String? message) {
-    return ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(message!),
-        duration: const Duration(seconds: 2),
-      ),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-            decoration: BoxDecoration(
+        decoration: BoxDecoration(
             gradient: LinearGradient(colors: [
           Colors.white,
           Colors.cyan.shade100,
@@ -68,7 +56,7 @@ class _PinCodeVerificationScreenState extends State<ValidationScreen> {
               children: <Widget>[
                 const SizedBox(height: 30),
                 SizedBox(
-                  height: MediaQuery.of(context).size.height / 3,
+                  height: MediaQuery.of(context).size.height / 6,
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(30),
                   ),
@@ -125,7 +113,6 @@ class _PinCodeVerificationScreenState extends State<ValidationScreen> {
                       length: 6,
                       obscureText: true,
                       obscuringCharacter: '*',
-                     
                       blinkWhenObscuring: true,
                       animationType: AnimationType.fade,
                       validator: (v) {
@@ -158,9 +145,6 @@ class _PinCodeVerificationScreenState extends State<ValidationScreen> {
                       onCompleted: (v) {
                         debugPrint("Completed");
                       },
-                      // onTap: () {
-                      //   print("Pressed");
-                      // },
                       onChanged: (value) {
                         debugPrint(value);
                         setState(() {
@@ -169,8 +153,7 @@ class _PinCodeVerificationScreenState extends State<ValidationScreen> {
                       },
                       beforeTextPaste: (text) {
                         debugPrint("Allowing to paste $text");
-                        //if you return true then it will show the paste confirmation dialog. Otherwise if false, then nothing will happen.
-                        //but you can show anything you want here, like your pop up saying wrong paste format or etc
+
                         return true;
                       },
                     ),
@@ -193,12 +176,8 @@ class _PinCodeVerificationScreenState extends State<ValidationScreen> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Text(
-                      "هل لم يتم اسال الكود؟",
-                      style: TextStyle(color: Colors.black54, fontSize: 15),
-                    ),
                     TextButton(
-                      onPressed: () => snackBar("تم اعادة الارسال "),
+                      onPressed: () => snackBar("تم اعادة الارسال ", context),
                       child: const Text(
                         " اعادة ارسال",
                         style: TextStyle(
@@ -207,60 +186,38 @@ class _PinCodeVerificationScreenState extends State<ValidationScreen> {
                           fontSize: 16,
                         ),
                       ),
+                    ),
+                    const Text(
+                      "هل لم يتم اسال الكود؟",
+                      style: TextStyle(color: Colors.black54, fontSize: 15),
                     )
                   ],
                 ),
                 const SizedBox(
                   height: 14,
                 ),
-                Container(
-                  margin:
-                      const EdgeInsets.symmetric(vertical: 16.0, horizontal: 30),
-                  child: ButtonTheme(
-                    height: 50,
-                    child: TextButton(
-                      onPressed: () {
-                        formKey.currentState!.validate();
-                        if (currentText.length != 6 ) {
-                          errorController!.add(ErrorAnimationType
-                              .shake); 
-                          setState(() => hasError = true);
-                        } else {
-                          setState(
-                            () {
-                              hasError = false;
-                              snackBar("تم التحقق!");
-                            },
-                          );
-                        }
-                      },
-                      child: Center(
-                        child: Text(
-                          "تحقق".toUpperCase(),
-                          style: const TextStyle(
-                            color: Colors.white,
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                  decoration: BoxDecoration(
-                      color: Colors.cyan,
-                      borderRadius: BorderRadius.circular(5),
-                      boxShadow: [
-                        BoxShadow(
-                            color: Colors.cyan,
-                            offset: const Offset(1, -2),
-                            blurRadius: 5),
-                        BoxShadow(
-                            color: Colors.cyan,
-                            offset: const Offset(-1, 2),
-                            blurRadius: 5)
-                      ]),
-                ),
-                const SizedBox(
+                Padding(
+                    padding: EdgeInsets.symmetric(vertical: 16, horizontal: 30),
+                    child: Button(
+                        isLoading: isLoading,
+                        text: "تحقق",
+                        height: 50,
+                        onTap: () {
+                          isLoading = true;
+                          formKey.currentState!.validate();
+                          if (currentText.length != 6) {
+                            errorController!.add(ErrorAnimationType.shake);
+                            setState(() => hasError = true);
+                          } else {
+                            setState(
+                              () {
+                                hasError = false;
+                                snackBar("تم التحقق!", context);
+                              },
+                            );
+                          }
+                        })),
+                SizedBox(
                   height: 16,
                 ),
                 Row(
@@ -274,7 +231,6 @@ class _PinCodeVerificationScreenState extends State<ValidationScreen> {
                         },
                       ),
                     ),
-                  
                   ],
                 )
               ],
@@ -285,5 +241,3 @@ class _PinCodeVerificationScreenState extends State<ValidationScreen> {
     );
   }
 }
-
-

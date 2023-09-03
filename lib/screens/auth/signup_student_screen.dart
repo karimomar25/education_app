@@ -107,14 +107,11 @@ class _SignUpStudentScreenState extends State<SignUpStudentScreen> {
                     isLoading = true;
                     if (formKey.currentState!.validate()) {
                       formKey.currentState!.save();
-                          Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => ValidationScreen()),
-              );
                     } else {
                       autovalidateMode = AutovalidateMode.always;
                       setState(() {});
                     }
+                    Navigator.pushNamed(context, "validation");
                   },
                   text: "تسجيل",
                   height: 50,

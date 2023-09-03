@@ -22,8 +22,10 @@ class Button extends StatelessWidget {
         width: width,
         height: height,
         alignment: Alignment.center,
-        decoration: BoxDecoration(
-            color: Colors.cyan, borderRadius: BorderRadius.circular(400)),
+        decoration: BoxDecoration(boxShadow: [
+          BoxShadow(color: Colors.cyan, offset: Offset(1, -2), blurRadius: 5),
+          BoxShadow(color: Colors.cyan, offset: Offset(-2, 1), blurRadius: 5)
+        ], color: Colors.cyan, borderRadius: BorderRadius.circular(5)),
         child: isLoading
             ? const SizedBox(
                 height: 24, width: 24, child: CircularProgressIndicator())
