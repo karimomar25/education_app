@@ -1,3 +1,4 @@
+import 'package:education_app/screens/auth/validation_screen.dart';
 import 'package:education_app/widgets/button.dart';
 import 'package:education_app/widgets/textfield.dart';
 import 'package:flutter/material.dart';
@@ -110,6 +111,7 @@ class _SignUpStudentScreenState extends State<SignUpStudentScreen> {
                       autovalidateMode = AutovalidateMode.always;
                       setState(() {});
                     }
+                    Navigator.pushNamed(context, "validation");
                   },
                   text: "تسجيل",
                   height: 50,
