@@ -1,12 +1,13 @@
 import 'package:education_app/screens/auth/login_screen.dart';
 import 'package:education_app/screens/auth/signup_student_screen.dart';
 import 'package:education_app/screens/auth/signup_teacher_screen.dart';
-import 'package:education_app/screens/auth/validation_screen.dart';
 import 'package:education_app/screens/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
-void main() {
+void main()  {
+
+ 
   runApp(const MyApp());
 }
 
@@ -35,7 +36,6 @@ class MyApp extends StatelessWidget {
         "loginscreen": (context) => const LoginScreen(),
         "signupteacher": (context) => const SignUpTeacherScreen(),
         "signupstudent": (context) => const SignUpStudentScreen(),
-        "validation": (context) => const ValidationScreen() ,
       },
     );
   }

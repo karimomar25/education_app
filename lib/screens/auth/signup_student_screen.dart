@@ -1,7 +1,8 @@
-import 'package:education_app/screens/auth/validation_screen.dart';
+import 'package:appwrite/appwrite.dart';
 import 'package:education_app/widgets/button.dart';
 import 'package:education_app/widgets/textfield.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class SignUpStudentScreen extends StatefulWidget {
   const SignUpStudentScreen({super.key});
@@ -80,10 +81,10 @@ class _SignUpStudentScreenState extends State<SignUpStudentScreen> {
                 ),
                 CustomTextField(
                   onSaved: (value) {
-                    phoneNumper = value;
+                    email = value;
                   },
-                  inputType: TextInputType.phone,
-                  text: "رقم الهاتف",
+                  inputType: TextInputType.emailAddress,
+                  text: "البريد الالكتروني",
                   width: double.infinity,
                 ),
                 const SizedBox(
@@ -103,15 +104,16 @@ class _SignUpStudentScreenState extends State<SignUpStudentScreen> {
                 Center(
                     child: Button(
                   isLoading: isLoading,
-                  onTap: () {
-                    isLoading = true;
+                  onTap: () async {
                     if (formKey.currentState!.validate()) {
                       formKey.currentState!.save();
                     } else {
                       autovalidateMode = AutovalidateMode.always;
                       setState(() {});
                     }
-                    Navigator.pushNamed(context, "validation");
+
+                    await signUpStudent(context);
+                    //SignUp method for the student
                   },
                   text: "تسجيل",
                   height: 50,
@@ -122,5 +124,43 @@ class _SignUpStudentScreenState extends State<SignUpStudentScreen> {
         ),
       ),
     );
+  }
+
+  Future<void> signUpStudent(BuildContext context) async {
+    Client client = Client()
+        .setEndpoint('https://cloud.appwrite.io/v1') // Your Appwrite Endpoint
+        .setProject('64f4b1309d579add11f3'); // Your project ID
+    Account account = Account(client);
+    try {
+      isLoading = true;
+
+      final user = await account.create(
+          userId: ID.unique(),
+          email: email!,
+          password: password,
+          name: "$firstName $lastName");
+
+      isLoading = false;
+    } catch (error) {
+      if (error is AppwriteException) {
+        Fluttertoast.showToast(
+          timeInSecForIosWeb: 5,
+          msg: error.message!,
+          toastLength: Toast.LENGTH_LONG,
+          backgroundColor: Colors.cyan,
+          textColor: Colors.white,
+          fontSize: 20,
+        );
+      } else {
+        Fluttertoast.showToast(
+          timeInSecForIosWeb: 5,
+          msg: "تم التسجيل بنجاح",
+          toastLength: Toast.LENGTH_LONG,
+          backgroundColor: Colors.cyan,
+          textColor: Colors.white,
+          fontSize: 20,
+        );
+      }
+    }
   }
 }
