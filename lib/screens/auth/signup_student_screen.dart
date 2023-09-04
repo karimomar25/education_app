@@ -131,20 +131,20 @@ class _SignUpStudentScreenState extends State<SignUpStudentScreen> {
   Future<void> signupStudent(BuildContext context) async {
     try {
       Client client = Client()
-          .setEndpoint(
-              'https://cloud.appwrite.io/v1') // Your Appwrite Endpoint
-          .setProject(
-              '64f4b1309d579add11f3'); // Your project ID
+          .setEndpoint('https://cloud.appwrite.io/v1') // Your Appwrite Endpoint
+          .setProject('64f4b1309d579add11f3'); // Your project ID
       Account account = Account(client);
-    
+
       final user = await account.create(
           userId: ID.unique(),
           name: "$firstName $lastName",
           email: email!,
           password: password);
+                isLoading = false;
+
     } on AppwriteException catch (e) {
       print(e);
-      if (e.code == "user_already_exists") {
+      if (e.code == 409) {
         snackBar("email alredy in use", context);
       }
     }

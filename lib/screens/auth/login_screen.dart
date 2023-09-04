@@ -95,24 +95,21 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   Future<void> loginUser(BuildContext context) async {
-     try {
+    try {
       final client = Client()
-          .setEndpoint(
-              'https://cloud.appwrite.io/v1') // Your API Endpoint
-          .setProject(
-              '64f4b1309d579add11f3'); // Your project ID
-    
+          .setEndpoint('https://cloud.appwrite.io/v1') // Your API Endpoint
+          .setProject('64f4b1309d579add11f3'); // Your project ID
+
       final account = Account(client);
-    
-      final session = await account.createEmailSession(
-          email: email, password: password);
+
+      final session =
+          await account.createEmailSession(email: email, password: password);
       isLoading = false;
       print("success");
     } on AppwriteException catch (e) {
       print(e);
-      snackBar("$e", context);
-      if (e.code ==
-          "user_invalid_credentials, Invalid credentials.") {
+
+      if (e.code == 401) {
         snackBar("please check email or password", context);
       }
     }
