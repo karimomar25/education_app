@@ -3,6 +3,7 @@ import 'package:education_app/widgets/snackbar.dart';
 import 'package:education_app/widgets/textfield.dart';
 import 'package:flutter/material.dart';
 import 'package:appwrite/appwrite.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({
@@ -62,7 +63,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 CustomTextField(
                     initialValue: widget.initialEmail,
-                    inputType: TextInputType.phone,
+                    inputType: TextInputType.emailAddress,
                     onSaved: (value) {
                       email = value;
                     },
@@ -83,7 +84,6 @@ class _LoginScreenState extends State<LoginScreen> {
                 Button(
                   isLoading: isLoading,
                   onTap: () async {
-                    isLoading = true;
                     if (formKey.currentState!.validate()) {
                       formKey.currentState!.save();
                     } else {
@@ -105,23 +105,44 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   Future<void> loginUser(BuildContext context) async {
+    isLoading = true;
+
+    final client = Client()
+        .setEndpoint('https://cloud.appwrite.io/v1') // Your API Endpoint
+        .setProject('64f4b1309d579add11f3'); // Your project ID
+
+    final account = Account(client);
+
     try {
-      final client = Client()
-          .setEndpoint('https://cloud.appwrite.io/v1') // Your API Endpoint
-          .setProject('64f4b1309d579add11f3'); // Your project ID
-
-      final account = Account(client);
-
       final session =
           await account.createEmailSession(email: email, password: password);
       isLoading = false;
-      print("success");
-    } on AppwriteException catch (e) {
+      Fluttertoast.showToast(
+        timeInSecForIosWeb: 5,
+        msg: "تم تسجيل الدخول بنجاح",
+        toastLength: Toast.LENGTH_LONG,
+        backgroundColor: Colors.cyan,
+        textColor: Colors.white,
+        fontSize: 20,
+      );
+    } on AppwriteException catch (error) {
+      Fluttertoast.showToast(
+        timeInSecForIosWeb: 5,
+        msg: error.message!,
+        toastLength: Toast.LENGTH_LONG,
+        backgroundColor: Colors.cyan,
+        textColor: Colors.white,
+        fontSize: 20,
+      );
+    } catch (e) {
       print(e);
-
-      if (e.code == 401) {
-        snackBar("please check email or password", context);
-      }
+      Fluttertoast.showToast(
+          backgroundColor: Colors.cyan,
+          toastLength: Toast.LENGTH_LONG,
+          textColor: Colors.white,
+          timeInSecForIosWeb: 5,
+          fontSize: 20,
+          msg: "حدث خطأ");
     }
   }
 }

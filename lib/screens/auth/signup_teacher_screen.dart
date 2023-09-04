@@ -106,7 +106,6 @@ class _SignUpTeacherScreenState extends State<SignUpTeacherScreen> {
                     child: Button(
                   isLoading: isLoading,
                   onTap: () async {
-                    isLoading = true;
                     if (formKey.currentState!.validate()) {
                       formKey.currentState!.save();
                     } else {
@@ -128,40 +127,44 @@ class _SignUpTeacherScreenState extends State<SignUpTeacherScreen> {
   }
 
   Future<void> signUpTeacher(BuildContext context) async {
+    isLoading = true;
+
     Client client = Client()
         .setEndpoint('https://cloud.appwrite.io/v1') // Your Appwrite Endpoint
         .setProject('64f4b1309d579add11f3'); // Your project ID
     Account account = Account(client);
     try {
-      isLoading = true;
-
       final user = await account.create(
           userId: ID.unique(),
           email: email!,
           password: password,
           name: "$firstName $lastName");
-
       isLoading = false;
-    } catch (error) {
-      if (error is AppwriteException) {
-        Fluttertoast.showToast(
-          timeInSecForIosWeb: 5,
-          msg: error.message!,
-          toastLength: Toast.LENGTH_LONG,
+      Fluttertoast.showToast(
+        timeInSecForIosWeb: 5,
+        msg: "تم التسجيل بنجاح",
+        toastLength: Toast.LENGTH_LONG,
+        backgroundColor: Colors.cyan,
+        textColor: Colors.white,
+        fontSize: 20,
+      );
+    } on AppwriteException catch (error) {
+      Fluttertoast.showToast(
+        timeInSecForIosWeb: 5,
+        msg: error.message!,
+        toastLength: Toast.LENGTH_LONG,
+        backgroundColor: Colors.cyan,
+        textColor: Colors.white,
+        fontSize: 20,
+      );
+    } catch (e) {
+      Fluttertoast.showToast(
           backgroundColor: Colors.cyan,
-          textColor: Colors.white,
-          fontSize: 20,
-        );
-      } else {
-        Fluttertoast.showToast(
-          timeInSecForIosWeb: 5,
-          msg: "تم التسجيل بنجاح",
           toastLength: Toast.LENGTH_LONG,
-          backgroundColor: Colors.cyan,
           textColor: Colors.white,
+          timeInSecForIosWeb: 5,
           fontSize: 20,
-        );
-      }
+          msg: "تم التسجيل بنجاح");
     }
   }
 }
