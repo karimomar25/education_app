@@ -1,6 +1,8 @@
 import 'package:education_app/widgets/button.dart';
+import 'package:education_app/widgets/snackbar.dart';
 import 'package:education_app/widgets/textfield.dart';
 import 'package:flutter/material.dart';
+import 'package:appwrite/appwrite.dart';
 
 class SignUpTeacherScreen extends StatefulWidget {
   const SignUpTeacherScreen({super.key});
@@ -11,10 +13,6 @@ class SignUpTeacherScreen extends StatefulWidget {
 
 class _SignUpTeacherScreenState extends State<SignUpTeacherScreen> {
   @override
-  void initState() {
-    ;
-  }
-
   final GlobalKey<FormState> formKey = GlobalKey();
   AutovalidateMode autovalidateMode = AutovalidateMode.disabled;
   String? firstName, lastName, email;
@@ -116,7 +114,9 @@ class _SignUpTeacherScreenState extends State<SignUpTeacherScreen> {
                       setState(() {});
                     }
 
-                    Navigator.pushNamed(context, "validation");
+                    await signUpTeacher(context);
+
+                    //  Navigator.pushNamed(context, "validation");
                   },
                   text: "تسجيل",
                   height: 50,
@@ -127,5 +127,28 @@ class _SignUpTeacherScreenState extends State<SignUpTeacherScreen> {
         ),
       ),
     );
+  }
+
+  Future<void> signUpTeacher(BuildContext context) async {
+     try {
+      Client client = Client()
+          .setEndpoint(
+              'https://cloud.appwrite.io/v1') // Your Appwrite Endpoint
+          .setProject(
+              '64f4b1309d579add11f3'); // Your project ID
+      Account account = Account(client);
+    
+      final user = await account.create(
+          userId: ID.unique(),
+          email: email!,
+          password: password,
+          name: firstName);
+    } on AppwriteException catch (e) {
+      print(e);
+      if (e.code == "user_already_exists") {
+        snackBar("email alredy in use", context);
+      }
+    }
+    isLoading = false;
   }
 }

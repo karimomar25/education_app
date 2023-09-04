@@ -1,4 +1,6 @@
+import 'package:appwrite/appwrite.dart';
 import 'package:education_app/widgets/button.dart';
+import 'package:education_app/widgets/snackbar.dart';
 import 'package:education_app/widgets/textfield.dart';
 import 'package:flutter/material.dart';
 
@@ -79,7 +81,7 @@ class _SignUpStudentScreenState extends State<SignUpStudentScreen> {
                 ),
                 CustomTextField(
                   onSaved: (value) {
-                    phoneNumper = value;
+                    email = value;
                   },
                   inputType: TextInputType.phone,
                   text: "البريد الالكتروني",
@@ -102,7 +104,7 @@ class _SignUpStudentScreenState extends State<SignUpStudentScreen> {
                 Center(
                     child: Button(
                   isLoading: isLoading,
-                  onTap: () {
+                  onTap: () async {
                     isLoading = true;
                     if (formKey.currentState!.validate()) {
                       formKey.currentState!.save();
@@ -110,7 +112,10 @@ class _SignUpStudentScreenState extends State<SignUpStudentScreen> {
                       autovalidateMode = AutovalidateMode.always;
                       setState(() {});
                     }
-                    Navigator.pushNamed(context, "validation");
+
+                    await signupStudent(context);
+                    isLoading = false;
+                    //    Navigator.pushNamed(context, "validation");
                   },
                   text: "تسجيل",
                   height: 50,
@@ -121,5 +126,27 @@ class _SignUpStudentScreenState extends State<SignUpStudentScreen> {
         ),
       ),
     );
+  }
+
+  Future<void> signupStudent(BuildContext context) async {
+    try {
+      Client client = Client()
+          .setEndpoint(
+              'https://cloud.appwrite.io/v1') // Your Appwrite Endpoint
+          .setProject(
+              '64f4b1309d579add11f3'); // Your project ID
+      Account account = Account(client);
+    
+      final user = await account.create(
+          userId: ID.unique(),
+          name: "$firstName $lastName",
+          email: email!,
+          password: password);
+    } on AppwriteException catch (e) {
+      print(e);
+      if (e.code == "user_already_exists") {
+        snackBar("email alredy in use", context);
+      }
+    }
   }
 }
