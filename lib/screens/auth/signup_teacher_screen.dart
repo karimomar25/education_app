@@ -1,3 +1,4 @@
+import 'package:education_app/screens/auth/login_screen.dart';
 import 'package:education_app/widgets/button.dart';
 import 'package:education_app/widgets/snackbar.dart';
 import 'package:education_app/widgets/textfield.dart';
@@ -17,9 +18,9 @@ class _SignUpTeacherScreenState extends State<SignUpTeacherScreen> {
   AutovalidateMode autovalidateMode = AutovalidateMode.disabled;
   String? firstName, lastName, email;
   // ignore: prefer_typing_uninitialized_variables
-  var phoneNumper;
+  int? phoneNumper;
   // ignore: prefer_typing_uninitialized_variables
-  var password;
+  dynamic password;
   bool isLoading = false;
   @override
   Widget build(BuildContext context) {
@@ -113,10 +114,10 @@ class _SignUpTeacherScreenState extends State<SignUpTeacherScreen> {
                       autovalidateMode = AutovalidateMode.always;
                       setState(() {});
                     }
-
+                    //SignUp method for the teacher
                     await signUpTeacher(context);
 
-                    //  Navigator.pushNamed(context, "validation");
+                    isLoading = false;
                   },
                   text: "تسجيل",
                   height: 50,
@@ -130,22 +131,33 @@ class _SignUpTeacherScreenState extends State<SignUpTeacherScreen> {
   }
 
   Future<void> signUpTeacher(BuildContext context) async {
+    Client client = Client()
+        .setEndpoint('https://cloud.appwrite.io/v1') // Your Appwrite Endpoint
+        .setProject('64f4b1309d579add11f3'); // Your project ID
+    Account account = Account(client);
     try {
-      Client client = Client()
-          .setEndpoint('https://cloud.appwrite.io/v1') // Your Appwrite Endpoint
-          .setProject('64f4b1309d579add11f3'); // Your project ID
-      Account account = Account(client);
-
       final user = await account.create(
           userId: ID.unique(),
           email: email!,
           password: password,
           name: "$firstName $lastName");
+
       isLoading = false;
-    } on AppwriteException catch (e) {
-      print(e);
-      if (e.code == 409) {
-        snackBar("email alredy in use", context);
+    } catch (error) {
+      (print(error.toString()));
+
+      if (error is AppwriteException) {
+        print(error.message);
+        snackBar(error.message, context);
+        print(error.response);
+      } else {
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => LoginScreen(
+                      initialEmail: email,
+                      initialPassword: password,
+                    )));
       }
     }
   }

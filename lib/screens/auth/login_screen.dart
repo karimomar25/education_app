@@ -5,8 +5,14 @@ import 'package:flutter/material.dart';
 import 'package:appwrite/appwrite.dart';
 
 class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
+  const LoginScreen({
+    super.key,
+    this.initialEmail,
+    this.initialPassword,
+  });
 
+  final String? initialEmail;
+  final dynamic initialPassword;
   @override
   State<LoginScreen> createState() => _LoginScreenState();
 }
@@ -16,6 +22,7 @@ class _LoginScreenState extends State<LoginScreen> {
   AutovalidateMode autovalidateMode = AutovalidateMode.disabled;
   dynamic email, password;
   bool isLoading = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -54,6 +61,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   height: 16,
                 ),
                 CustomTextField(
+                    initialValue: widget.initialEmail,
                     inputType: TextInputType.phone,
                     onSaved: (value) {
                       email = value;
@@ -63,6 +71,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   height: 16,
                 ),
                 CustomTextField(
+                    initialValue: widget.initialPassword,
                     onSaved: (value) {
                       password = value;
                     },
@@ -81,6 +90,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       autovalidateMode = AutovalidateMode.always;
                       setState(() {});
                     }
+                    //Login method
                     await loginUser(context);
                   },
                   text: "تسجيل الدخول",
