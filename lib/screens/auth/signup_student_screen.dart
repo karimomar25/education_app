@@ -82,7 +82,7 @@ class _SignUpStudentScreenState extends State<SignUpStudentScreen> {
                     phoneNumper = value;
                   },
                   inputType: TextInputType.phone,
-                  text: "رقم الهاتف",
+                  text: "البريد الالكتروني",
                   width: double.infinity,
                 ),
                 const SizedBox(

@@ -94,17 +94,6 @@ class _SignUpTeacherScreenState extends State<SignUpTeacherScreen> {
                   height: 16,
                 ),
                 CustomTextField(
-                  onSaved: (value) {
-                    phoneNumper = value;
-                  },
-                  inputType: TextInputType.phone,
-                  text: "رقم الهاتف",
-                  width: double.infinity,
-                ),
-                const SizedBox(
-                  height: 16,
-                ),
-                CustomTextField(
                   obscureText: true,
                   onSaved: (value) {
                     password = value;
@@ -126,7 +115,7 @@ class _SignUpTeacherScreenState extends State<SignUpTeacherScreen> {
                       autovalidateMode = AutovalidateMode.always;
                       setState(() {});
                     }
-                    
+
                     Navigator.pushNamed(context, "validation");
                   },
                   text: "تسجيل",
