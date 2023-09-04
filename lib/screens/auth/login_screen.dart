@@ -1,10 +1,18 @@
 import 'package:education_app/widgets/button.dart';
+import 'package:education_app/widgets/snackbar.dart';
 import 'package:education_app/widgets/textfield.dart';
 import 'package:flutter/material.dart';
+import 'package:appwrite/appwrite.dart';
 
 class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
+  const LoginScreen({
+    super.key,
+    this.initialEmail,
+    this.initialPassword,
+  });
 
+  final String? initialEmail;
+  final dynamic initialPassword;
   @override
   State<LoginScreen> createState() => _LoginScreenState();
 }
@@ -12,8 +20,9 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   final GlobalKey<FormState> formKey = GlobalKey();
   AutovalidateMode autovalidateMode = AutovalidateMode.disabled;
-  dynamic phoneNumper, password;
+  dynamic email, password;
   bool isLoading = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -52,15 +61,17 @@ class _LoginScreenState extends State<LoginScreen> {
                   height: 16,
                 ),
                 CustomTextField(
+                    initialValue: widget.initialEmail,
                     inputType: TextInputType.phone,
                     onSaved: (value) {
-                      phoneNumper = value;
+                      email = value;
                     },
-                    text: "رقم الهاتف"),
+                    text: " البريد الالكتروني"),
                 const SizedBox(
                   height: 16,
                 ),
                 CustomTextField(
+                    initialValue: widget.initialPassword,
                     onSaved: (value) {
                       password = value;
                     },
@@ -71,7 +82,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 Button(
                   isLoading: isLoading,
-                  onTap: () {
+                  onTap: () async {
                     isLoading = true;
                     if (formKey.currentState!.validate()) {
                       formKey.currentState!.save();
@@ -79,6 +90,8 @@ class _LoginScreenState extends State<LoginScreen> {
                       autovalidateMode = AutovalidateMode.always;
                       setState(() {});
                     }
+                    //Login method
+                    await loginUser(context);
                   },
                   text: "تسجيل الدخول",
                   height: 50,
@@ -89,5 +102,26 @@ class _LoginScreenState extends State<LoginScreen> {
         ),
       ),
     );
+  }
+
+  Future<void> loginUser(BuildContext context) async {
+    try {
+      final client = Client()
+          .setEndpoint('https://cloud.appwrite.io/v1') // Your API Endpoint
+          .setProject('64f4b1309d579add11f3'); // Your project ID
+
+      final account = Account(client);
+
+      final session =
+          await account.createEmailSession(email: email, password: password);
+      isLoading = false;
+      print("success");
+    } on AppwriteException catch (e) {
+      print(e);
+
+      if (e.code == 401) {
+        snackBar("please check email or password", context);
+      }
+    }
   }
 }

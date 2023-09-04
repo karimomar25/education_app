@@ -1,6 +1,10 @@
+import 'package:education_app/screens/auth/login_screen.dart';
 import 'package:education_app/widgets/button.dart';
+import 'package:education_app/widgets/snackbar.dart';
 import 'package:education_app/widgets/textfield.dart';
 import 'package:flutter/material.dart';
+import 'package:appwrite/appwrite.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class SignUpTeacherScreen extends StatefulWidget {
   const SignUpTeacherScreen({super.key});
@@ -11,17 +15,13 @@ class SignUpTeacherScreen extends StatefulWidget {
 
 class _SignUpTeacherScreenState extends State<SignUpTeacherScreen> {
   @override
-  void initState() {
-    ;
-  }
-
   final GlobalKey<FormState> formKey = GlobalKey();
   AutovalidateMode autovalidateMode = AutovalidateMode.disabled;
   String? firstName, lastName, email;
   // ignore: prefer_typing_uninitialized_variables
-  var phoneNumper;
+  int? phoneNumper;
   // ignore: prefer_typing_uninitialized_variables
-  var password;
+  dynamic password;
   bool isLoading = false;
   @override
   Widget build(BuildContext context) {
@@ -94,17 +94,6 @@ class _SignUpTeacherScreenState extends State<SignUpTeacherScreen> {
                   height: 16,
                 ),
                 CustomTextField(
-                  onSaved: (value) {
-                    phoneNumper = value;
-                  },
-                  inputType: TextInputType.phone,
-                  text: "رقم الهاتف",
-                  width: double.infinity,
-                ),
-                const SizedBox(
-                  height: 16,
-                ),
-                CustomTextField(
                   obscureText: true,
                   onSaved: (value) {
                     password = value;
@@ -126,8 +115,10 @@ class _SignUpTeacherScreenState extends State<SignUpTeacherScreen> {
                       autovalidateMode = AutovalidateMode.always;
                       setState(() {});
                     }
-                    
-                    Navigator.pushNamed(context, "validation");
+                    //SignUp method for the teacher
+                    await signUpTeacher(context);
+
+                    isLoading = false;
                   },
                   text: "تسجيل",
                   height: 50,
@@ -138,5 +129,41 @@ class _SignUpTeacherScreenState extends State<SignUpTeacherScreen> {
         ),
       ),
     );
+  }
+
+  Future<void> signUpTeacher(BuildContext context) async {
+    Client client = Client()
+        .setEndpoint('https://cloud.appwrite.io/v1') // Your Appwrite Endpoint
+        .setProject('64f4b1309d579add11f3'); // Your project ID
+    Account account = Account(client);
+    try {
+      final user = await account.create(
+          userId: ID.unique(),
+          email: email!,
+          password: password,
+          name: "$firstName $lastName");
+
+      isLoading = false;
+    } catch (error) {
+      if (error is AppwriteException) {
+        Fluttertoast.showToast(
+          timeInSecForIosWeb: 5,
+          msg: error.message!,
+          toastLength: Toast.LENGTH_LONG,
+          backgroundColor: Colors.cyan,
+          textColor: Colors.white,
+          fontSize: 20,
+        );
+      } else {
+        Fluttertoast.showToast(
+          timeInSecForIosWeb: 5,
+          msg: "تم التسجيل بنجاح",
+          toastLength: Toast.LENGTH_LONG,
+          backgroundColor: Colors.cyan,
+          textColor: Colors.white,
+          fontSize: 20,
+        );
+      }
+    }
   }
 }

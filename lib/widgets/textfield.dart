@@ -9,6 +9,7 @@ class CustomTextField extends StatelessWidget {
     this.onChanged,
     this.inputType,
     this.obscureText = false,
+    this.initialValue,
   });
   final String text;
   final double? width;
@@ -16,12 +17,14 @@ class CustomTextField extends StatelessWidget {
   final void Function(String)? onChanged;
   final TextInputType? inputType;
   final bool obscureText;
+  final String? initialValue;
   @override
   Widget build(BuildContext context) {
     return SizedBox(
       width: width,
       height: 70,
       child: TextFormField(
+        initialValue: initialValue,
         textDirection: TextDirection.rtl,
         obscureText: obscureText,
         keyboardType: inputType,
