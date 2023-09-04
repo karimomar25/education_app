@@ -117,8 +117,6 @@ class _SignUpTeacherScreenState extends State<SignUpTeacherScreen> {
                     }
                     //SignUp method for the teacher
                     await signUpTeacher(context);
-
-                    isLoading = false;
                   },
                   text: "تسجيل",
                   height: 50,
@@ -137,6 +135,8 @@ class _SignUpTeacherScreenState extends State<SignUpTeacherScreen> {
         .setProject('64f4b1309d579add11f3'); // Your project ID
     Account account = Account(client);
     try {
+      isLoading = true;
+
       final user = await account.create(
           userId: ID.unique(),
           email: email!,

@@ -84,7 +84,7 @@ class _SignUpStudentScreenState extends State<SignUpStudentScreen> {
                   onSaved: (value) {
                     email = value;
                   },
-                  inputType: TextInputType.phone,
+                  inputType: TextInputType.emailAddress,
                   text: "البريد الالكتروني",
                   width: double.infinity,
                 ),
@@ -106,13 +106,13 @@ class _SignUpStudentScreenState extends State<SignUpStudentScreen> {
                     child: Button(
                   isLoading: isLoading,
                   onTap: () async {
-                    isLoading = true;
                     if (formKey.currentState!.validate()) {
                       formKey.currentState!.save();
                     } else {
                       autovalidateMode = AutovalidateMode.always;
                       setState(() {});
                     }
+
                     await signUpStudent(context);
                     //SignUp method for the student
                   },
@@ -133,6 +133,8 @@ class _SignUpStudentScreenState extends State<SignUpStudentScreen> {
         .setProject('64f4b1309d579add11f3'); // Your project ID
     Account account = Account(client);
     try {
+      isLoading = true;
+
       final user = await account.create(
           userId: ID.unique(),
           email: email!,
