@@ -1,6 +1,4 @@
-import 'package:education_app/screens/auth/login_screen.dart';
 import 'package:education_app/widgets/button.dart';
-import 'package:education_app/widgets/snackbar.dart';
 import 'package:education_app/widgets/textfield.dart';
 import 'package:flutter/material.dart';
 import 'package:appwrite/appwrite.dart';
