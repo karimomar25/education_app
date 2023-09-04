@@ -1,4 +1,3 @@
-import 'package:education_app/screens/auth/validation_screen.dart';
 import 'package:education_app/widgets/button.dart';
 import 'package:education_app/widgets/textfield.dart';
 import 'package:flutter/material.dart';
@@ -11,6 +10,11 @@ class SignUpTeacherScreen extends StatefulWidget {
 }
 
 class _SignUpTeacherScreenState extends State<SignUpTeacherScreen> {
+  @override
+  void initState() {
+    ;
+  }
+
   final GlobalKey<FormState> formKey = GlobalKey();
   AutovalidateMode autovalidateMode = AutovalidateMode.disabled;
   String? firstName, lastName, email;
@@ -114,7 +118,7 @@ class _SignUpTeacherScreenState extends State<SignUpTeacherScreen> {
                 Center(
                     child: Button(
                   isLoading: isLoading,
-                  onTap: () {
+                  onTap: () async {
                     isLoading = true;
                     if (formKey.currentState!.validate()) {
                       formKey.currentState!.save();
@@ -122,6 +126,7 @@ class _SignUpTeacherScreenState extends State<SignUpTeacherScreen> {
                       autovalidateMode = AutovalidateMode.always;
                       setState(() {});
                     }
+                    
                     Navigator.pushNamed(context, "validation");
                   },
                   text: "تسجيل",
