@@ -113,14 +113,8 @@ class _SignUpStudentScreenState extends State<SignUpStudentScreen> {
                       autovalidateMode = AutovalidateMode.always;
                       setState(() {});
                     }
+                    await signUpStudent(context);
                     //SignUp method for the student
-                    Client client = Client()
-                        .setEndpoint(
-                            'https://cloud.appwrite.io/v1') // Your Appwrite Endpoint
-                        .setProject('64f4b1309d579add11f3'); // Your project ID
-                    await signUpStudent(client, context);
-
-                    //    Navigator.pushNamed(context, "validation");
                   },
                   text: "تسجيل",
                   height: 50,
@@ -133,7 +127,10 @@ class _SignUpStudentScreenState extends State<SignUpStudentScreen> {
     );
   }
 
-  Future<void> signUpStudent(Client client, BuildContext context) async {
+  Future<void> signUpStudent(BuildContext context) async {
+    Client client = Client()
+        .setEndpoint('https://cloud.appwrite.io/v1') // Your Appwrite Endpoint
+        .setProject('64f4b1309d579add11f3'); // Your project ID
     Account account = Account(client);
     try {
       final user = await account.create(
@@ -151,16 +148,16 @@ class _SignUpStudentScreenState extends State<SignUpStudentScreen> {
           toastLength: Toast.LENGTH_LONG,
           backgroundColor: Colors.cyan,
           textColor: Colors.white,
-          fontSize: 18,
+          fontSize: 20,
         );
       } else {
         Fluttertoast.showToast(
           timeInSecForIosWeb: 5,
-          toastLength: Toast.LENGTH_LONG,
           msg: "تم التسجيل بنجاح",
+          toastLength: Toast.LENGTH_LONG,
           backgroundColor: Colors.cyan,
           textColor: Colors.white,
-          fontSize: 18,
+          fontSize: 20,
         );
       }
     }
