@@ -4,6 +4,7 @@ import 'package:education_app/widgets/snackbar.dart';
 import 'package:education_app/widgets/textfield.dart';
 import 'package:flutter/material.dart';
 import 'package:appwrite/appwrite.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class SignUpTeacherScreen extends StatefulWidget {
   const SignUpTeacherScreen({super.key});
@@ -144,20 +145,24 @@ class _SignUpTeacherScreenState extends State<SignUpTeacherScreen> {
 
       isLoading = false;
     } catch (error) {
-      (print(error.toString()));
-
       if (error is AppwriteException) {
-        print(error.message);
-        snackBar(error.message, context);
-        print(error.response);
+        Fluttertoast.showToast(
+          timeInSecForIosWeb: 5,
+          msg: error.message!,
+          toastLength: Toast.LENGTH_LONG,
+          backgroundColor: Colors.cyan,
+          textColor: Colors.white,
+          fontSize: 20,
+        );
       } else {
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => LoginScreen(
-                      initialEmail: email,
-                      initialPassword: password,
-                    )));
+        Fluttertoast.showToast(
+          timeInSecForIosWeb: 5,
+          msg: "تم التسجيل بنجاح",
+          toastLength: Toast.LENGTH_LONG,
+          backgroundColor: Colors.cyan,
+          textColor: Colors.white,
+          fontSize: 20,
+        );
       }
     }
   }

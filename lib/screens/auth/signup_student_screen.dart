@@ -3,6 +3,7 @@ import 'package:education_app/widgets/button.dart';
 import 'package:education_app/widgets/snackbar.dart';
 import 'package:education_app/widgets/textfield.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class SignUpStudentScreen extends StatefulWidget {
   const SignUpStudentScreen({super.key});
@@ -117,20 +118,8 @@ class _SignUpStudentScreenState extends State<SignUpStudentScreen> {
                         .setEndpoint(
                             'https://cloud.appwrite.io/v1') // Your Appwrite Endpoint
                         .setProject('64f4b1309d579add11f3'); // Your project ID
-                    Account account = Account(client);
+                    await signUpStudent(client, context);
 
-                    try {
-                      final user = await account.create(
-                          userId: ID.unique(),
-                          name: "$firstName $lastName",
-                          email: email!,
-                          password: password);
-                      isLoading = false;
-                    } catch (e) {
-                      print(e);
-                    }
-                    snackBar("تم التسجيل بنحاج", context);
-                    isLoading = false;
                     //    Navigator.pushNamed(context, "validation");
                   },
                   text: "تسجيل",
@@ -143,26 +132,37 @@ class _SignUpStudentScreenState extends State<SignUpStudentScreen> {
       ),
     );
   }
-}
-//   Future<void> signupStudent(BuildContext context) async {
-//     try {
-//       Client client = Client()
-//           .setEndpoint('https://cloud.appwrite.io/v1') // Your Appwrite Endpoint
-//           .setProject('64f4b1309d579add11f3'); // Your project ID
-//       Account account = Account(client);
 
-//       final user = await account.create(
-//           userId: ID.unique(),
-//           name: "$firstName $lastName",
-//           email: email!,
-//           password: password);
-//       isLoading = false;
-//       snackBar("تم التسجيل النجاح ", context);
-//     } on AppwriteException catch (e) {
-//       print(e);
-//       if (e.code == 409) {
-//         snackBar("email alredy in use", context);
-//       }
-//     }
-//   }
-// }
+  Future<void> signUpStudent(Client client, BuildContext context) async {
+    Account account = Account(client);
+    try {
+      final user = await account.create(
+          userId: ID.unique(),
+          email: email!,
+          password: password,
+          name: "$firstName $lastName");
+
+      isLoading = false;
+    } catch (error) {
+      if (error is AppwriteException) {
+        Fluttertoast.showToast(
+          timeInSecForIosWeb: 5,
+          msg: error.message!,
+          toastLength: Toast.LENGTH_LONG,
+          backgroundColor: Colors.cyan,
+          textColor: Colors.white,
+          fontSize: 18,
+        );
+      } else {
+        Fluttertoast.showToast(
+          timeInSecForIosWeb: 5,
+          toastLength: Toast.LENGTH_LONG,
+          msg: "تم التسجيل بنجاح",
+          backgroundColor: Colors.cyan,
+          textColor: Colors.white,
+          fontSize: 18,
+        );
+      }
+    }
+  }
+}
