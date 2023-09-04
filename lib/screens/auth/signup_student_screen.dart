@@ -112,7 +112,7 @@ class _SignUpStudentScreenState extends State<SignUpStudentScreen> {
                       autovalidateMode = AutovalidateMode.always;
                       setState(() {});
                     }
-                    final client = Client()
+                    Client client = Client()
                         .setEndpoint(
                             'https://cloud.appwrite.io/v1') // Your Appwrite Endpoint
                         .setProject('64f4b1309d579add11f3'); // Your project ID
