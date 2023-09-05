@@ -22,7 +22,7 @@ class Button extends StatelessWidget {
         width: width,
         height: height,
         alignment: Alignment.center,
-        decoration: BoxDecoration(boxShadow: [
+        decoration: BoxDecoration(boxShadow: const [
           BoxShadow(color: Colors.cyan, offset: Offset(1, -2), blurRadius: 5),
           BoxShadow(color: Colors.cyan, offset: Offset(-2, 1), blurRadius: 5)
         ], color: Colors.cyan, borderRadius: BorderRadius.circular(5)),
