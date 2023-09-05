@@ -27,8 +27,13 @@ class _SignUpStudentScreenState extends State<SignUpStudentScreen> {
       listener: (context, state) {
         if (state is AuthLoading) {
           isLoading = true;
+          setState(() {});
         } else if (state is AuthSuccess) {
           isLoading = false;
+          setState(() {});
+        } else {
+          isLoading = false;
+          setState(() {});
         }
       },
       child: Scaffold(
