@@ -1,93 +1,80 @@
-import 'package:education_app/widgets/button.dart';
 import 'package:flutter/material.dart';
-import 'package:animated_text_kit/animated_text_kit.dart';
 
 class HomeScreen extends StatelessWidget {
-  const HomeScreen({Key? key}) : super(key: key);
+  const HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
       body: Container(
         decoration: BoxDecoration(
-            gradient: LinearGradient(
-                colors: [Colors.white, Colors.cyan.shade100],
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter)),
-        child: Column(
-          children: [
-            const SizedBox(
-              height: 77,
-            ),
-            Image.asset(
-              'assets/images/maxresdefault-719x720-1.png',
-              height: 290,
-            ),
-            const SizedBox(
-              height: 45,
-            ),
-            AnimatedTextKit(
-              animatedTexts: [
-                TypewriterAnimatedText(
-                  'اهلا بكم في تعليم اونلاين',
-                  textStyle: const TextStyle(
-                    fontSize: 32.0,
-                    fontWeight: FontWeight.bold,
-                  ),
-                  speed: const Duration(milliseconds: 100),
-                ),
-              ],
-              totalRepeatCount: 4,
-              displayFullTextOnTap: true,
-              stopPauseOnTap: true,
-            ),
-            const SizedBox(
-              height: 33,
-            ),
-            SizedBox(
-                width: 250.0,
-                height: 60.0,
-                child: Button(
-                    onTap: () {
-                      Navigator.pushNamed(context, "signupteacher");
-                    },
-                    text: "انشاء حساب مدرس")),
-            const SizedBox(
-              height: 16,
-            ),
-            SizedBox(
-                width: 250.0,
-                height: 60.0,
-                child: Button(
-                    onTap: () {
-                      Navigator.pushNamed(context, "signupstudent");
-                    },
-                    text: "انشاء حساب طالب")),
-            Expanded(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
+            gradient: LinearGradient(colors: [
+          Colors.white,
+          Colors.cyan.shade100,
+        ], begin: Alignment.topCenter, end: Alignment.bottomCenter)),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            //   textDirection: TextDirection.rtl,
+            children: [
+              SizedBox(
+                height: 50,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Text(
-                    " لديك حساب بالفعل؟ ",
-                    style: TextStyle(fontSize: 20),
-                  ),
-                  InkWell(
-                    onTap: () {
-                      Navigator.pushNamed(context, "loginscreen");
-                    },
-                    child: const Text(
-                      "اضغط هنا",
-                      style: TextStyle(
-                          color: Colors.cyan,
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold),
+                  Icon(Icons.menu),
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(25),
+                    child: Image.asset(
+                      "assets/images/test.jpeg",
+                      height: 40,
                     ),
-                  ),
+                  )
                 ],
               ),
-            )
-          ],
+              SizedBox(
+                height: 24,
+              ),
+              Text(
+                //  textDirection: TextDirection.rtl,
+                " , مرحبا كريم ",
+                style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
+              ),
+              SizedBox(
+                height: 24,
+              ),
+              Text(
+                textDirection: TextDirection.rtl,
+                "قم باختيار الصف الدراسي الخاص بك من القائمة الموجودة بالاسفل .",
+                style: TextStyle(
+                  fontSize: 24,
+                ),
+              ),
+              SizedBox(
+                height: 24,
+              ),
+              Expanded(
+                  child: GridView.builder(
+                      itemCount: 6,
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisSpacing: 10,
+                          mainAxisSpacing: 10,
+                          crossAxisCount: 2),
+                      itemBuilder: (context, index) {
+                        return Card(
+                          color: Colors.pink[50],
+                          child: Column(
+                            children: [
+                              Text("الصف الاول الاعدادي"),
+                              Image.asset("assets/images/images.jpeg")
+                            ],
+                          ),
+                        );
+                      }))
+            ],
+          ),
         ),
       ),
     );

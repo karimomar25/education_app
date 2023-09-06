@@ -1,4 +1,4 @@
-import 'package:education_app/cubit/auth_cubit.dart';
+import 'package:education_app/cubits/auth_cubit/auth_cubit.dart';
 import 'package:education_app/widgets/button.dart';
 import 'package:education_app/widgets/textfield.dart';
 import 'package:flutter/material.dart';
@@ -33,6 +33,8 @@ class _LoginScreenState extends State<LoginScreen> {
           setState(() {});
         } else if (state is AuthSuccess) {
           isLoading = false;
+          Navigator.pushReplacementNamed(context, "homescreen");
+
           setState(() {});
         } else {
           isLoading = false;
