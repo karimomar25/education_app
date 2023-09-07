@@ -31,7 +31,7 @@ class _SignUpTeacherScreenState extends State<SignUpTeacherScreen> {
         } else if (state is AuthSuccess) {
           isLoading = false;
           setState(() {});
-          Navigator.pushReplacementNamed(context, "homescreen");
+          Navigator.pushReplacementNamed(context, "teacherscreen");
         } else {
           isLoading = false;
           setState(() {});

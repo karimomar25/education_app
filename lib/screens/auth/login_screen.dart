@@ -23,7 +23,8 @@ class _LoginScreenState extends State<LoginScreen> {
   AutovalidateMode autovalidateMode = AutovalidateMode.disabled;
   dynamic email, password;
   bool isLoading = false;
-
+  bool? isTeacher;
+  String? selectedOption;
   @override
   Widget build(BuildContext context) {
     return BlocListener<AuthCubit, AuthState>(
@@ -33,9 +34,13 @@ class _LoginScreenState extends State<LoginScreen> {
           setState(() {});
         } else if (state is AuthSuccess) {
           isLoading = false;
-          Navigator.pushReplacementNamed(context, "homescreen");
-
           setState(() {});
+
+          if (isTeacher == true) {
+            Navigator.pushReplacementNamed(context, "teacherscreen");
+          } else if (isTeacher == false) {
+            Navigator.pushReplacementNamed(context, "studentscreen");
+          }
         } else {
           isLoading = false;
           setState(() {});
@@ -93,6 +98,59 @@ class _LoginScreenState extends State<LoginScreen> {
                       },
                       obscureText: true,
                       text: "كلمة السر"),
+                  const SizedBox(
+                    height: 16,
+                  ),
+                  Text(
+                    textDirection: TextDirection.rtl,
+                    "من فضلك اختار انت مدرس ولا طالب قبل ما تدوس تسجيل دخول !!",
+                    style: TextStyle(
+                        color: Colors.red,
+                        fontSize: 18,
+                        fontWeight: FontWeight.w900),
+                  ),
+                  Row(
+                    children: [
+                      Flexible(
+                        child: ListTile(
+                          title: Text(
+                            "انا طالب",
+                            style: TextStyle(
+                                fontSize: 20, fontWeight: FontWeight.bold),
+                          ),
+                          leading: Radio(
+                              activeColor: Colors.cyan,
+                              value: "انا طالب",
+                              groupValue: selectedOption,
+                              onChanged: (value) {
+                                setState(() {
+                                  selectedOption = value;
+                                  isTeacher = false;
+                                });
+                              }),
+                        ),
+                      ),
+                      Flexible(
+                        child: ListTile(
+                          title: Text(
+                            "انا مدرس",
+                            style: TextStyle(
+                                fontSize: 20, fontWeight: FontWeight.bold),
+                          ),
+                          leading: Radio(
+                              activeColor: Colors.cyan,
+                              value: "انا مدرس",
+                              groupValue: selectedOption,
+                              onChanged: (value) {
+                                setState(() {
+                                  selectedOption = value;
+                                  isTeacher = true;
+                                });
+                              }),
+                        ),
+                      ),
+                    ],
+                  ),
                   const SizedBox(
                     height: 16,
                   ),

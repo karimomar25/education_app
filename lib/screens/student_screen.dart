@@ -1,8 +1,8 @@
 import 'package:education_app/widgets/custom_container.dart';
 import 'package:flutter/material.dart';
 
-class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key});
+class StudentScreen extends StatelessWidget {
+  const StudentScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
