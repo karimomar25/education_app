@@ -28,10 +28,10 @@ class _SignUpTeacherScreenState extends State<SignUpTeacherScreen> {
         if (state is AuthLoading) {
           isLoading = true;
           setState(() {});
+
         } else if (state is AuthSuccess) {
           isLoading = false;
           setState(() {});
-          Navigator.pushReplacementNamed(context, "teacherscreen");
         } else {
           isLoading = false;
           setState(() {});
@@ -122,9 +122,11 @@ class _SignUpTeacherScreenState extends State<SignUpTeacherScreen> {
                     onTap: () async {
                       if (formKey.currentState!.validate()) {
                         formKey.currentState!.save();
+
                       } else {
                         autovalidateMode = AutovalidateMode.always;
                         setState(() {});
+
                       }
                       try {
                         BlocProvider.of<AuthCubit>(context).signUpTeacher(
