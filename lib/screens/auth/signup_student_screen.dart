@@ -1,4 +1,4 @@
-import 'package:education_app/cubit/auth_cubit.dart';
+import 'package:education_app/cubits/auth_cubit/auth_cubit.dart';
 import 'package:education_app/widgets/button.dart';
 import 'package:education_app/widgets/textfield.dart';
 import 'package:flutter/material.dart';
@@ -31,6 +31,7 @@ class _SignUpStudentScreenState extends State<SignUpStudentScreen> {
         } else if (state is AuthSuccess) {
           isLoading = false;
           setState(() {});
+          Navigator.pushReplacementNamed(context, "studentscreen");
         } else {
           isLoading = false;
           setState(() {});
@@ -141,8 +142,6 @@ class _SignUpStudentScreenState extends State<SignUpStudentScreen> {
                             msg:
                                 "لقد حدث خطأ ، من فضلك تأكد من ادخال البيانات بشكل صحيح");
                       }
-                      // await signUpStudent(context);
-                      //SignUp method for the student
                     },
                     text: "تسجيل",
                     height: 50,

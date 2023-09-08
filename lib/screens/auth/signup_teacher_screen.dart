@@ -1,4 +1,4 @@
-import 'package:education_app/cubit/auth_cubit.dart';
+import 'package:education_app/cubits/auth_cubit/auth_cubit.dart';
 import 'package:education_app/widgets/button.dart';
 import 'package:education_app/widgets/textfield.dart';
 import 'package:flutter/material.dart';
@@ -32,8 +32,6 @@ class _SignUpTeacherScreenState extends State<SignUpTeacherScreen> {
         } else if (state is AuthSuccess) {
           isLoading = false;
           setState(() {});
-          Navigator.pushNamed(context, "mainteacherscreen"); 
-
         } else {
           isLoading = false;
           setState(() {});
