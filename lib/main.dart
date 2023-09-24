@@ -2,6 +2,7 @@ import 'package:education_app/cubits/auth_cubit/auth_cubit.dart';
 import 'package:education_app/screens/auth/login_screen.dart';
 import 'package:education_app/screens/auth/signup_student_screen.dart';
 import 'package:education_app/screens/auth/signup_teacher_screen.dart';
+import 'package:education_app/screens/main_teacher_screen.dart';
 import 'package:education_app/screens/start_screen.dart';
 import 'package:education_app/screens/student_screen.dart';
 import 'package:education_app/screens/teacher_screen.dart';
