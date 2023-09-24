@@ -18,13 +18,13 @@ class HomeScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
-              SizedBox(
+              const SizedBox(
                 height: 50,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Icon(Icons.menu),
+                  const Icon(Icons.menu),
                   ClipRRect(
                     borderRadius: BorderRadius.circular(25),
                     child: Image.asset(
@@ -34,34 +34,34 @@ class HomeScreen extends StatelessWidget {
                   )
                 ],
               ),
-              SizedBox(
+              const SizedBox(
                 height: 24,
               ),
-              Text(
+              const Text(
                 //  textDirection: TextDirection.rtl,
                 " , مرحبا كريم ",
                 style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 24,
               ),
-              Text(
+              const Text(
                 textDirection: TextDirection.rtl,
                 "قم باختيار الصف الدراسي الخاص بك من القائمة الموجودة بالاسفل .",
                 style: TextStyle(
                   fontSize: 24,
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 24,
               ),
               Expanded(
                   child: GridView(
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisSpacing: 20,
                     mainAxisSpacing: 30,
                     crossAxisCount: 2),
-                children: [
+                children: const [
                   CustomContainer(
                       text: "الصف الاول الاعدادي",
                       image: "assets/images/images.jpeg"),

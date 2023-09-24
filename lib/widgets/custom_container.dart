@@ -11,15 +11,15 @@ class CustomContainer extends StatelessWidget {
             BoxShadow(
                 blurRadius: 10,
                 color: Colors.cyan.shade200,
-                offset: Offset(-2, 1))
+                offset: const Offset(-2, 1))
           ],
           borderRadius: BorderRadius.circular(12),
-          image: DecorationImage(
+          image: const DecorationImage(
               image: AssetImage("assets/images/images.jpeg"),
               fit: BoxFit.contain),
-          gradient: LinearGradient(colors: [Colors.white, Colors.white])),
+          gradient: const LinearGradient(colors: [Colors.white, Colors.white])),
       child: Container(
-        decoration: BoxDecoration(),
+        decoration: const BoxDecoration(),
         child: Text(
           textAlign: TextAlign.center,
           text,
